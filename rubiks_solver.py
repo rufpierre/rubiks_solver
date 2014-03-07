@@ -189,7 +189,7 @@ def self_counter_clockwise(facet, cube, new_cube):
 	new_cube[facet][8] = cube[facet][6]
 
 
-def f(cube):
+def f_(cube):
 	new_cube = copy.deepcopy(cube)
 
 	new_cube[3][0] = cube[0][6]
@@ -259,60 +259,60 @@ def R(cube):
 
 
 
-def r(cube):
+def r_(cube):
 	cube = T(cube)
-	cube = f(cube)
+	cube = f_(cube)
 	cube = T(cube)
 	cube = T(cube)
 	cube = T(cube)
 	return cube
 
-def b(cube):
+def b_(cube):
 	cube = T(cube)
 	cube = T(cube)
-	cube = f(cube)
+	cube = f_(cube)
 	cube = T(cube)
 	cube = T(cube)
 	return cube
 
-def l(cube):
+def l_(cube):
 	cube = T(cube)
 	cube = T(cube)
 	cube = T(cube)
-	cube = f(cube)
+	cube = f_(cube)
 	cube = T(cube)
 	return cube
 
-def d(cube):
+def d_(cube):
 	cube = R(cube)
-	cube = f(cube)
+	cube = f_(cube)
 	cube = R(cube)
 	cube = R(cube)
 	cube = R(cube)
 	return cube
 
-def t(cube):
+def t_(cube):
 	cube = R(cube)
 	cube = R(cube)
 	cube = R(cube)
-	cube = f(cube)
+	cube = f_(cube)
 	cube = R(cube)
 	return cube
 
 def chain(instructions, cube):
 	for instruction in instructions:
 		if(instruction=="f"):
-			cube = f(cube)
+			cube = f_(cube)
 		if(instruction=="r"):
-			cube = r(cube)
+			cube = r_(cube)
 		if(instruction=="b"):
-			cube = b(cube)
+			cube = b_(cube)
 		if(instruction=="l"):
-			cube = l(cube)
+			cube = l_(cube)
 		if(instruction=="d"):
-			cube = d(cube)
+			cube = d_(cube)
 		if(instruction=="t"):
-			cube = t(cube)
+			cube = t_(cube)
 	return cube
 
 
@@ -326,11 +326,25 @@ print_cube(cube)
 
 # faire f-
 
-cube = chain("frlt", cube)
+# cube = chain("frlt", cube)
 
-print_cube(cube)
+# print_cube(cube)
 
+#transformation = 
 
+f = 'f'
+r = 'r'
+b = 'b'
+l = 'l'
+d = 'd'
+t = 't'
+x = 'x'
 
+while True:
+	k = input()
+	if k == 'x':
+		break
+	cube = chain(k, cube)
+	print_cube(cube)
 
 
