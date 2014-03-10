@@ -63,7 +63,7 @@ def col(color):
 
 colors = {W:bcolors.WHITE, G:bcolors.GREEN, R:bcolors.RED, B:bcolors.BLUE, O:bcolors.ORANGE, Y:bcolors.YELLOW}
 
-cube = [
+original_cube = [
 [W,W,W,
 W,W,W,
 W,W,W],
@@ -104,6 +104,8 @@ O,O,O],
 Y,Y,Y,
 Y,Y,Y],
 ]
+
+cube = original_cube
 
 def print_cube(cube):
 	print(cube_string.format(
@@ -208,7 +210,7 @@ def f_(cube):
 
 	return copy.deepcopy(new_cube)
 
-def T(cube):
+def T_(cube):
 	new_cube = copy.deepcopy(cube)
 
 	for i in range(9):
@@ -221,7 +223,7 @@ def T(cube):
 
 	return copy.deepcopy(new_cube)
 
-def R(cube):
+def R_(cube):
 	new_cube = copy.deepcopy(cube)
 
 	for i in range(9):
@@ -260,47 +262,82 @@ def R(cube):
 
 
 def r_(cube):
-	cube = T(cube)
+	cube = T_(cube)
 	cube = f_(cube)
-	cube = T(cube)
-	cube = T(cube)
-	cube = T(cube)
+	cube = T_(cube)
+	cube = T_(cube)
+	cube = T_(cube)
 	return cube
 
 def b_(cube):
-	cube = T(cube)
-	cube = T(cube)
+	cube = T_(cube)
+	cube = T_(cube)
 	cube = f_(cube)
-	cube = T(cube)
-	cube = T(cube)
+	cube = T_(cube)
+	cube = T_(cube)
 	return cube
 
 def l_(cube):
-	cube = T(cube)
-	cube = T(cube)
-	cube = T(cube)
+	cube = T_(cube)
+	cube = T_(cube)
+	cube = T_(cube)
 	cube = f_(cube)
-	cube = T(cube)
+	cube = T_(cube)
 	return cube
 
 def d_(cube):
-	cube = R(cube)
+	cube = R_(cube)
 	cube = f_(cube)
-	cube = R(cube)
-	cube = R(cube)
-	cube = R(cube)
+	cube = R_(cube)
+	cube = R_(cube)
+	cube = R_(cube)
 	return cube
 
 def t_(cube):
-	cube = R(cube)
-	cube = R(cube)
-	cube = R(cube)
+	cube = R_(cube)
+	cube = R_(cube)
+	cube = R_(cube)
 	cube = f_(cube)
-	cube = R(cube)
+	cube = R_(cube)
 	return cube
+
+
+# inverse functions
+def xf_(cube):
+	return f_(f_(f_(cube)))
+
+def xr_(cube):
+	return r_(r_(r_(cube)))
+
+def xb_(cube):
+	return b_(b_(b_(cube)))
+
+def xl_(cube):
+	return l_(l_(l_(cube)))
+
+def xd_(cube):
+	return d_(d_(d_(cube)))
+
+def xt_(cube):
+	return t_(t_(t_(cube)))
+
 
 def chain(instructions, cube):
 	for instruction in instructions:
+
+		if(instruction=="F"):
+			cube = xf_(cube)
+		if(instruction=="R"):
+			cube = xr_(cube)
+		if(instruction=="B"):
+			cube = xb_(cube)
+		if(instruction=="L"):
+			cube = xl_(cube)
+		if(instruction=="D"):
+			cube = xd_(cube)
+		if(instruction=="T"):
+			cube = xt_(cube)		
+
 		if(instruction=="f"):
 			cube = f_(cube)
 		if(instruction=="r"):
@@ -313,8 +350,19 @@ def chain(instructions, cube):
 			cube = d_(cube)
 		if(instruction=="t"):
 			cube = t_(cube)
+
 	return cube
 
+print("\033c")
+
+
+help = """f,r,b,l,d,t for standard transformations
+F,R,B,L,D,T for reverse transformations
+z to reset the cube
+q to quit
+"""
+
+print(help)
 
 # cube = f(cube)
 # cube = r(cube)
@@ -338,13 +386,46 @@ b = 'b'
 l = 'l'
 d = 'd'
 t = 't'
-x = 'x'
 
-while True:
-	k = input()
-	if k == 'x':
-		break
-	cube = chain(k, cube)
-	print_cube(cube)
+F = 'F'
+R = 'R'
+B = 'B'
+L = 'L'
+D = 'D'
+T = 'T'
+
+q = 'q'
+z = 'z'
+h = 'h'
+
+cube = chain("flfTrtffllTLbDBllt", cube)
+print_cube(cube)
+
+# Pons asinorum : 
+#F2 B2 R2 L2 U2 D2
+#"ffbbrrllttdd"
+# cube in a cube : 
+#F L F U' R U F2 L2 U' L' B D' B' L2 U
+#"flfTrtffllTLbDBllt"
+
+while False:
+	try:
+		k = input()
+		if k == 'q':
+			print("\033c")
+			break
+		elif k == 'z':
+			cube = original_cube
+			print("\033c")
+			print(help)
+			print_cube(cube)
+		else:	
+			cube = chain(k, cube)
+			print("\033c")
+			print(help)
+			print_cube(cube)		
+	except NameError:
+		print("command unknown")
+
 
 
