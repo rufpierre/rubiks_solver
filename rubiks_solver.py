@@ -191,7 +191,7 @@ def self_counter_clockwise(facet, cube, new_cube):
 	new_cube[facet][8] = cube[facet][6]
 
 
-def f_(cube):
+def F(cube):
 	new_cube = copy.deepcopy(cube)
 
 	new_cube[3][0] = cube[0][6]
@@ -210,7 +210,7 @@ def f_(cube):
 
 	return copy.deepcopy(new_cube)
 
-def T_(cube):
+def rot_T(cube):
 	new_cube = copy.deepcopy(cube)
 
 	for i in range(9):
@@ -223,7 +223,7 @@ def T_(cube):
 
 	return copy.deepcopy(new_cube)
 
-def R_(cube):
+def rot_R(cube):
 	new_cube = copy.deepcopy(cube)
 
 	for i in range(9):
@@ -261,74 +261,76 @@ def R_(cube):
 
 
 
-def r_(cube):
-	cube = T_(cube)
-	cube = f_(cube)
-	cube = T_(cube)
-	cube = T_(cube)
-	cube = T_(cube)
+def R(cube):
+	cube = rot_T(cube)
+	cube = F(cube)
+	cube = rot_T(cube)
+	cube = rot_T(cube)
+	cube = rot_T(cube)
 	return cube
 
-def b_(cube):
-	cube = T_(cube)
-	cube = T_(cube)
-	cube = f_(cube)
-	cube = T_(cube)
-	cube = T_(cube)
+def B(cube):
+	cube = rot_T(cube)
+	cube = rot_T(cube)
+	cube = F(cube)
+	cube = rot_T(cube)
+	cube = rot_T(cube)
 	return cube
 
-def l_(cube):
-	cube = T_(cube)
-	cube = T_(cube)
-	cube = T_(cube)
-	cube = f_(cube)
-	cube = T_(cube)
+def L(cube):
+	cube = rot_T(cube)
+	cube = rot_T(cube)
+	cube = rot_T(cube)
+	cube = F(cube)
+	cube = rot_T(cube)
 	return cube
 
-def d_(cube):
-	cube = R_(cube)
-	cube = f_(cube)
-	cube = R_(cube)
-	cube = R_(cube)
-	cube = R_(cube)
+def D(cube):
+	cube = rot_R(cube)
+	cube = F(cube)
+	cube = rot_R(cube)
+	cube = rot_R(cube)
+	cube = rot_R(cube)
 	return cube
 
-def t_(cube):
-	cube = R_(cube)
-	cube = R_(cube)
-	cube = R_(cube)
-	cube = f_(cube)
-	cube = R_(cube)
+def T(cube):
+	cube = rot_R(cube)
+	cube = rot_R(cube)
+	cube = rot_R(cube)
+	cube = F(cube)
+	cube = rot_R(cube)
 	return cube
 
 
 # inverse functions
-def xf_(cube):
-	return f_(f_(f_(cube)))
+def F3(cube):
+	return F(F(F(cube)))
 
-def xr_(cube):
-	return r_(r_(r_(cube)))
+def R3(cube):
+	return R(R(R(cube)))
 
-def xb_(cube):
-	return b_(b_(b_(cube)))
+def B3(cube):
+	return B(B(B(cube)))
 
-def xl_(cube):
-	return l_(l_(l_(cube)))
+def L3(cube):
+	return L(L(L(cube)))
 
-def xd_(cube):
-	return d_(d_(d_(cube)))
+def D3(cube):
+	return D(D(D(cube)))
 
-def xt_(cube):
-	return t_(t_(t_(cube)))
+def T3(cube):
+	return T(T(T(cube)))
 
 
 def chain(instructions, cube):
 	"""execute a chain of instructions"""
-	# for instruction in instructions.split():
-	# 	if
-	# 	print('toto')
+	for instruction in instructions.split():
+		if(instruction=='F'):
+			cube = F(cube)
+		if(instruction=='L'):
+			cube = L(cube)
 
-	# return cube
+	return cube
 	for instruction in instructions:
 
 		if(instruction=="F"):
@@ -398,12 +400,12 @@ instructions = "F L F U' R U F2 L2 U' L' B D' B' L2 U"
 
 #"flfTrtffllTLbDBllt"
 
-# cube = chain(instructions, cube)
-# print_cube(cube)
+cube = chain(instructions, cube)
+print_cube(cube)
 
 
 
-while True:
+while False:
 	k = raw_input()
 	if k == 'q':
 		print("\033c")
