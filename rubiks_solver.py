@@ -323,6 +323,12 @@ def xt_(cube):
 
 
 def chain(instructions, cube):
+	"""execute a chain of instructions"""
+	# for instruction in instructions.split():
+	# 	if
+	# 	print('toto')
+
+	# return cube
 	for instruction in instructions:
 
 		if(instruction=="F"):
@@ -380,51 +386,39 @@ print_cube(cube)
 
 #transformation = 
 
-f = 'f'
-r = 'r'
-b = 'b'
-l = 'l'
-d = 'd'
-t = 't'
-
-F = 'F'
-R = 'R'
-B = 'B'
-L = 'L'
-D = 'D'
-T = 'T'
-
-q = 'q'
-z = 'z'
-h = 'h'
-
-cube = chain("flfTrtffllTLbDBllt", cube)
-print_cube(cube)
+instructions = "flfTrtffllTLbDBllt"
 
 # Pons asinorum : 
 #F2 B2 R2 L2 U2 D2
+instructions = "F2 B2 R2 L2 U2 D2"
 #"ffbbrrllttdd"
 # cube in a cube : 
 #F L F U' R U F2 L2 U' L' B D' B' L2 U
+instructions = "F L F U' R U F2 L2 U' L' B D' B' L2 U"
+
 #"flfTrtffllTLbDBllt"
 
-while False:
-	try:
-		k = input()
-		if k == 'q':
-			print("\033c")
-			break
-		elif k == 'z':
-			cube = original_cube
-			print("\033c")
-			print(help)
-			print_cube(cube)
-		else:	
-			cube = chain(k, cube)
-			print("\033c")
-			print(help)
-			print_cube(cube)		
-	except NameError:
+# cube = chain(instructions, cube)
+# print_cube(cube)
+
+
+
+while True:
+	k = raw_input()
+	if k == 'q':
+		print("\033c")
+		break
+	elif k == 'z':
+		cube = original_cube
+		print("\033c")
+		print(help)
+		print_cube(cube)
+	elif k in 'frbldtFRBLDT':	
+		cube = chain(k, cube)
+		print("\033c")
+		print(help)
+		print_cube(cube)
+	else:	
 		print("command unknown")
 
 
