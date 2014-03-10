@@ -293,7 +293,7 @@ def D(cube):
 	cube = rot_R(cube)
 	return cube
 
-def T(cube):
+def U(cube):
 	cube = rot_R(cube)
 	cube = rot_R(cube)
 	cube = rot_R(cube)
@@ -301,64 +301,28 @@ def T(cube):
 	cube = rot_R(cube)
 	return cube
 
+def split_instruction(instruction):
+	"""split an instruction of form: "f'" into the tupple ("F",3), or "L2" into ('L', 2)"""
+	if(len(instruction)==1):
+		return instruction.upper(), 1
+	else:
+		instruction = instruction.replace("'","3")
+		return instruction[0].upper(), int(instruction[1])
 
-# inverse functions
-def F3(cube):
-	return F(F(F(cube)))
+def transform(instruction, cube):
+	"""apply an instruction of form f' (or l2, or R2) to a cube"""
+	transformation, times = split_instruction(instruction)
+	for i in range(times):
+		cube = eval(transformation+"(cube)")
+	return cube
 
-def R3(cube):
-	return R(R(R(cube)))
-
-def B3(cube):
-	return B(B(B(cube)))
-
-def L3(cube):
-	return L(L(L(cube)))
-
-def D3(cube):
-	return D(D(D(cube)))
-
-def T3(cube):
-	return T(T(T(cube)))
 
 
 def chain(instructions, cube):
 	"""execute a chain of instructions"""
+	print (instructions)
 	for instruction in instructions.split():
-		if(instruction=='F'):
-			cube = F(cube)
-		if(instruction=='L'):
-			cube = L(cube)
-
-	return cube
-	for instruction in instructions:
-
-		if(instruction=="F"):
-			cube = xf_(cube)
-		if(instruction=="R"):
-			cube = xr_(cube)
-		if(instruction=="B"):
-			cube = xb_(cube)
-		if(instruction=="L"):
-			cube = xl_(cube)
-		if(instruction=="D"):
-			cube = xd_(cube)
-		if(instruction=="T"):
-			cube = xt_(cube)		
-
-		if(instruction=="f"):
-			cube = f_(cube)
-		if(instruction=="r"):
-			cube = r_(cube)
-		if(instruction=="b"):
-			cube = b_(cube)
-		if(instruction=="l"):
-			cube = l_(cube)
-		if(instruction=="d"):
-			cube = d_(cube)
-		if(instruction=="t"):
-			cube = t_(cube)
-
+		cube = transform(instruction,cube)
 	return cube
 
 print("\033c")
@@ -400,12 +364,12 @@ instructions = "F L F U' R U F2 L2 U' L' B D' B' L2 U"
 
 #"flfTrtffllTLbDBllt"
 
-cube = chain(instructions, cube)
-print_cube(cube)
+# cube = chain(instructions, cube)
+# print_cube(cube)
 
 
 
-while False:
+while True:
 	k = raw_input()
 	if k == 'q':
 		print("\033c")
@@ -415,13 +379,13 @@ while False:
 		print("\033c")
 		print(help)
 		print_cube(cube)
-	elif k in 'frbldtFRBLDT':	
+	else:#elif k in 'frbldtFRBLDT':	
 		cube = chain(k, cube)
-		print("\033c")
+		# print("\033c")
 		print(help)
 		print_cube(cube)
-	else:	
-		print("command unknown")
+	# else:	
+	# 	print("command unknown")
 
 
 
