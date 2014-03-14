@@ -319,7 +319,7 @@ def transform(instruction, cube):
 
 
 def chain(instructions, cube):
-	"""execute a chain of instructions"""
+	"""execute a chain of instructions in hte form of : 'F2 B2 R2 L2 U2 D2'"""
 	print (instructions)
 	for instruction in instructions.split():
 		cube = transform(instruction,cube)
@@ -334,42 +334,23 @@ z to reset the cube
 q to quit
 """
 
+# init the display
 print(help)
-
-# cube = f(cube)
-# cube = r(cube)
-# cube = b(cube)
-# cube = l(cube)
-# cube = f(cube)
 print_cube(cube)
-#cube = t(cube)
 
-# faire f-
+# choose between CLI mode or static mode
+cli = True
 
-# cube = chain("frlt", cube)
+# static mode
+if (not cli):
+	rand_inst = "flfTrtffllTLbDBllt"
+	pons_asinorum = "F2 B2 R2 L2 U2 D2"
+	cube_in_a_cube = "F L F U' R U F2 L2 U' L' B D' B' L2 U"
+	cube = chain(cube_in_a_cube, cube)
+	print_cube(cube)
 
-# print_cube(cube)
-
-#transformation = 
-
-instructions = "flfTrtffllTLbDBllt"
-
-# Pons asinorum : 
-#F2 B2 R2 L2 U2 D2
-instructions = "F2 B2 R2 L2 U2 D2"
-#"ffbbrrllttdd"
-# cube in a cube : 
-#F L F U' R U F2 L2 U' L' B D' B' L2 U
-instructions = "F L F U' R U F2 L2 U' L' B D' B' L2 U"
-
-#"flfTrtffllTLbDBllt"
-
-# cube = chain(instructions, cube)
-# print_cube(cube)
-
-
-
-while True:
+# CLI mode
+while cli:
 	k = raw_input()
 	if k == 'q':
 		print("\033c")
@@ -379,13 +360,11 @@ while True:
 		print("\033c")
 		print(help)
 		print_cube(cube)
-	else:#elif k in 'frbldtFRBLDT':	
+	else:	
 		cube = chain(k, cube)
 		# print("\033c")
 		print(help)
 		print_cube(cube)
-	# else:	
-	# 	print("command unknown")
 
 
 
