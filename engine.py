@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import copy
 
 class bcolors:
@@ -50,12 +52,18 @@ cube_string = """
     {D6}{D7}{D8}
 """
 
-W = 1
-G = 2
-R = 3
-B = 4
-O = 5
-Y = 6
+# W = 1
+# G = 2
+# R = 3
+# B = 4
+# O = 5
+# Y = 6
+W = 0
+G = 1
+R = 2
+B = 3
+O = 4
+Y = 5
 
 def col(color):
 	return bcolors.WHITE
@@ -63,21 +71,27 @@ def col(color):
 colors = {W:bcolors.WHITE, G:bcolors.GREEN, R:bcolors.RED, B:bcolors.BLUE, O:bcolors.ORANGE, Y:bcolors.YELLOW}
 
 original_cube = [
+# 0: UP facet
 [W,W,W,
 W,W,W,
 W,W,W],
+# 1: LEFT facet
 [G,G,G,
 G,G,G,
 G,G,G],
+# 2: FRONT facet
 [R,R,R,
 R,R,R,
 R,R,R],
+# 3: RIGHT facet
 [B,B,B,
 B,B,B,
 B,B,B],
+# 4: BACK facet
 [O,O,O,
 O,O,O,
 O,O,O],
+# 5: DOWN facet
 [Y,Y,Y,
 Y,Y,Y,
 Y,Y,Y],
