@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from engine import *
@@ -20,6 +21,17 @@ print_cube(cube)
 cli = True
 
 
+#==============================================================================
+# en cours:
+# essayer de comprendre les genes et les organismes
+# bidouiller l exemple que jai recopié dans le repertoire (le duppliquer)
+# 	pour l amener vers un gene string au lieu de float
+# 
+# en cours 2
+#     ai fait une seule classe de gene (pas d heritage)
+#     il faut minimiser la fonction de fitness (donc l inverser)
+#     bien comprendre comment marche le truc avec les floats
+#==============================================================================
 
 # fitness of the cube
 def variance(x):
@@ -38,8 +50,10 @@ def dist2(x):
 
 def fitness(cube):
 	"""fitness of the cube is the sum of the variances for each facet of the cube
-	max score (cube in its initial state) is 81"""
-	return sum([variance(dist2(cube[facet])) for facet in range(6)])
+	max score multiplied by -1.
+     cube in its initial state is -81 wich is the lowest and best score
+     'cube in a cube' is -33"""
+	return -sum([variance(dist2(cube[facet])) for facet in range(6)])
 
 
 # static mode
